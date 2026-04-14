@@ -128,6 +128,80 @@ import Footer from '../components/Footer.astro';
       </div>
 
       <div class="about-section">
+        <h2 class="about-section-title">致谢与友链</h2>
+        <div class="about-card">
+          <p>广财飞跃手册的诞生，离不开众多优秀开源项目的启发与鼓舞。正是这些先行者的无私分享，让我们相信：消除信息差的力量，可以改变一个人的选择轨迹。</p>
+          <p>特别感谢以下项目，它们是我们灵感的来源：</p>
+        </div>
+        <div class="inspiration-grid">
+          <a href="https://csdiy.wiki/" target="_blank" rel="noopener noreferrer" class="inspiration-card">
+            <span class="inspiration-icon">🌍</span>
+            <div class="inspiration-info">
+              <h3>CS 自学指南</h3>
+              <p>CS DIY Wiki — 计算机科学自学路线与课程推荐</p>
+            </div>
+            <span class="inspiration-arrow">→</span>
+          </a>
+          <a href="https://github.com/qingyujean/awesome-gdufe" target="_blank" rel="noopener noreferrer" class="inspiration-card">
+            <span class="inspiration-icon">🎓</span>
+            <div class="inspiration-info">
+              <h3>Awesome GDUFE</h3>
+              <p>广财学习资源与经验整理</p>
+            </div>
+            <span class="inspiration-arrow">→</span>
+          </a>
+          <a href="https://survivesjtu.github.io/SJTU-Application/" target="_blank" rel="noopener noreferrer" class="inspiration-card">
+            <span class="inspiration-icon">📘</span>
+            <div class="inspiration-info">
+              <h3>交大生存手册</h3>
+              <p>上海交通大学学生经验分享手册，国内高校手册类项目的先驱</p>
+            </div>
+            <span class="inspiration-arrow">→</span>
+          </a>
+        </div>
+        <div class="about-card" style="margin-top: 16px;">
+          <p>如果你也知道其他优秀的高校经验分享项目，欢迎通过 <a href="/submit">投稿</a> 或 <a href="https://github.com/cxw745/runguide" target="_blank" rel="noopener noreferrer">GitHub Issue</a> 推荐给我们！</p>
+        </div>
+      </div>
+
+      <div class="about-section">
+        <h2 class="about-section-title">开源手册友链</h2>
+        <div class="about-card">
+          <p>这里收录了其他高校的开源经验手册项目，它们同样在为消除信息差而努力。如果你也在做类似的事情，欢迎联系我们互换友链。</p>
+        </div>
+        <div class="friendlinks-grid">
+          <a href="https://survivesjtu.github.io/SJTU-Application/" target="_blank" rel="noopener noreferrer" class="friendlink-card">
+            <span class="friendlink-emoji">📘</span>
+            <div class="friendlink-info">
+              <h3>交大生存手册</h3>
+              <p>上海交通大学</p>
+            </div>
+          </a>
+          <a href="https://pkuphoto.github.io/pkuphoto.github.io/" target="_blank" rel="noopener noreferrer" class="friendlink-card">
+            <span class="friendlink-emoji">📸</span>
+            <div class="friendlink-info">
+              <h3>北大生存手册</h3>
+              <p>北京大学</p>
+            </div>
+          </a>
+          <a href="https://csdiy.wiki/" target="_blank" rel="noopener noreferrer" class="friendlink-card">
+            <span class="friendlink-emoji">🌍</span>
+            <div class="friendlink-info">
+              <h3>CS 自学指南</h3>
+              <p>计算机科学自学路线</p>
+            </div>
+          </a>
+          <a href="https://github.com/ruanyf/weekly" target="_blank" rel="noopener noreferrer" class="friendlink-card">
+            <span class="friendlink-emoji">📰</span>
+            <div class="friendlink-info">
+              <h3>阮一峰科技周刊</h3>
+              <p>技术视野与资源推荐</p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="about-section">
         <h2 class="about-section-title">免责声明</h2>
         <div class="about-card disclaimer">
           <p>本平台所有文章内容仅代表作者个人观点和经验，不构成任何官方建议。每位同学的情况不同，请结合自身实际做出判断和选择。本平台不对任何因参考文章内容而产生的后果承担责任。</p>
@@ -305,6 +379,112 @@ import Footer from '../components/Footer.astro';
     border-color: transparent;
   }
 
+  .inspiration-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .inspiration-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+
+  .inspiration-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent);
+    opacity: 1;
+  }
+
+  .inspiration-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  .inspiration-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .inspiration-info h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .inspiration-info p {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .inspiration-arrow {
+    font-size: 16px;
+    color: var(--text-muted);
+    transition: transform 0.2s, color 0.2s;
+    flex-shrink: 0;
+  }
+
+  .inspiration-card:hover .inspiration-arrow {
+    transform: translateX(4px);
+    color: var(--accent);
+  }
+
+  .friendlinks-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .friendlink-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+
+  .friendlink-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent);
+    opacity: 1;
+  }
+
+  .friendlink-emoji {
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  .friendlink-info h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+
+  .friendlink-info p {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
   @media (max-width: 720px) {
     .mission-grid {
       grid-template-columns: 1fr;
@@ -316,6 +496,10 @@ import Footer from '../components/Footer.astro';
 
     .about-links {
       flex-direction: column;
+    }
+
+    .friendlinks-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>

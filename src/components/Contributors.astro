@@ -1,0 +1,131 @@
+---
+---
+
+<section class="contributors">
+  <div class="container">
+    <h2 class="section-title">感谢贡献者</h2>
+    <p class="section-desc">每一份贡献都让飞跃手册变得更好</p>
+    <div id="contributors-grid" class="contributors-grid">
+      <div class="contributor-loading">加载中...</div>
+    </div>
+    <a href="/submit" class="contributors-cta btn btn-secondary">成为贡献者 →</a>
+  </div>
+</section>
+
+<script>
+  async function loadContributors() {
+    const grid = document.getElementById('contributors-grid');
+    if (!grid) return;
+
+    try {
+      const res = await fetch('/api/contributors');
+      if (!res.ok) throw new Error('Failed');
+
+      const contributors = await res.json();
+      if (!contributors.length) {
+        grid.innerHTML = '<div class="contributor-empty">暂无贡献者</div>';
+        return;
+      }
+
+      grid.innerHTML = contributors.map(c => `
+        <a href="${c.html_url}" target="_blank" rel="noopener noreferrer" class="contributor-card" title="@${c.login}">
+          <img src="${c.avatar_url}" alt="${c.login}" class="contributor-avatar" loading="lazy" />
+          <span class="contributor-name">${c.login}</span>
+        </a>
+      `).join('');
+    } catch {
+      grid.innerHTML = '<div class="contributor-error">无法加载贡献者列表</div>';
+    }
+  }
+
+  loadContributors();
+</script>
+
+<style>
+  .contributors {
+    padding: 64px 0;
+    background-color: var(--bg-alt);
+  }
+
+  .contributors-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 28px;
+    min-height: 80px;
+  }
+
+  .contributor-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 12px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    min-width: 90px;
+  }
+
+  .contributor-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent);
+    opacity: 1;
+  }
+
+  .contributor-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    transition: border-color 0.2s;
+  }
+
+  .contributor-card:hover .contributor-avatar {
+    border-color: var(--accent);
+  }
+
+  .contributor-name {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .contributor-card:hover .contributor-name {
+    color: var(--accent);
+  }
+
+  .contributors-cta {
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .contributor-loading,
+  .contributor-empty,
+  .contributor-error {
+    font-size: 14px;
+    color: var(--text-muted);
+    padding: 20px;
+  }
+
+  @media (max-width: 480px) {
+    .contributor-card {
+      min-width: 76px;
+      padding: 12px 8px;
+    }
+
+    .contributor-avatar {
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>

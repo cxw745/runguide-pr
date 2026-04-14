@@ -4,56 +4,123 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 ---
 
-<BaseLayout title="投稿">
+<BaseLayout title="在线投稿">
   <Header />
   <main class="submit-page">
     <div class="container">
       <div class="submit-hero">
-        <h1 class="submit-title">📝 投稿分享你的经验</h1>
-        <p class="submit-subtitle">每一篇经验都可能帮助一位迷茫的学弟学妹做出关键决定</p>
+        <h1 class="submit-title">📝 在线投稿</h1>
+        <p class="submit-subtitle">登录 GitHub 账号，使用 Markdown 编写你的经验分享</p>
       </div>
 
-      <div class="submit-actions">
-        <a href="/admin" class="btn btn-primary btn-lg">
-          ✏️ 立即在线投稿
-        </a>
-        <span class="submit-hint">需要 GitHub 账号登录</span>
+      <div id="auth-section" class="auth-section">
+        <div class="auth-card">
+          <div class="auth-icon">🔐</div>
+          <h2 class="auth-title">登录 GitHub 开始投稿</h2>
+          <p class="auth-desc">使用 GitHub 账号登录后即可在线编写和提交文章</p>
+          <a href="/api/auth/login" class="btn btn-primary btn-lg">
+            <svg class="github-icon" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            登录 GitHub
+          </a>
+        </div>
       </div>
 
-      <div class="workflow">
-        <h2 class="workflow-title">投稿流程</h2>
-        <div class="steps">
-          <div class="step">
-            <div class="step-num">1</div>
-            <div class="step-body">
-              <h3>点击上方「立即在线投稿」按钮</h3>
-              <p>使用 GitHub 账号登录内容管理系统（Decap CMS），无需额外注册</p>
+      <div id="editor-section" class="editor-section" style="display:none;">
+        <div class="user-bar">
+          <div class="user-info">
+            <img id="user-avatar" class="user-avatar" src="" alt="" />
+            <span id="user-name" class="user-name"></span>
+          </div>
+          <button id="logout-btn" class="btn btn-secondary btn-sm">退出登录</button>
+        </div>
+
+        <form id="submit-form" class="submit-form">
+          <div class="form-grid">
+            <div class="form-group form-group-title">
+              <label for="article-title">标题 <span class="required">*</span></label>
+              <input type="text" id="article-title" name="title" required placeholder="例如：考研上岸记：从广财到 985" />
+            </div>
+            <div class="form-group">
+              <label for="article-author">作者 <span class="required">*</span></label>
+              <input type="text" id="article-author" name="author" required placeholder="你的名字或昵称" />
+            </div>
+            <div class="form-group">
+              <label for="article-category">分类 <span class="required">*</span></label>
+              <select id="article-category" name="category" required>
+                <option value="">请选择分类</option>
+                <option value="转专业">🔄 转专业</option>
+                <option value="保研">🎓 保研</option>
+                <option value="考研">📚 考研</option>
+                <option value="出国留学">✈️ 出国留学</option>
+                <option value="就业">💼 就业</option>
+                <option value="其他">💡 其他</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="article-tags">标签</label>
+              <input type="text" id="article-tags" name="tags" placeholder="用逗号分隔，如：考研,985,备考" />
+            </div>
+            <div class="form-group form-group-full">
+              <label for="article-excerpt">摘要 <span class="required">*</span></label>
+              <textarea id="article-excerpt" name="excerpt" required rows="2" placeholder="一句话概括文章内容，建议 50 字以内"></textarea>
             </div>
           </div>
-          <div class="step-arrow">↓</div>
-          <div class="step">
-            <div class="step-num">2</div>
-            <div class="step-body">
-              <h3>填写文章信息并编写正文</h3>
-              <p>输入标题、选择分类（转专业/保研/考研/出国留学/就业/其他）、添加标签、写摘要，用 Markdown 编写正文</p>
+
+          <div class="editor-container">
+            <div class="editor-header">
+              <span class="editor-label">正文 (Markdown) <span class="required">*</span></span>
+              <div class="editor-toolbar">
+                <button type="button" data-action="h2" title="二级标题">H2</button>
+                <button type="button" data-action="h3" title="三级标题">H3</button>
+                <span class="toolbar-divider"></span>
+                <button type="button" data-action="bold" title="粗体"><b>B</b></button>
+                <button type="button" data-action="italic" title="斜体"><i>I</i></button>
+                <button type="button" data-action="code" title="行内代码">&lt;/&gt;</button>
+                <span class="toolbar-divider"></span>
+                <button type="button" data-action="link" title="链接">🔗</button>
+                <button type="button" data-action="image" title="图片">🖼️</button>
+                <button type="button" data-action="quote" title="引用">❝</button>
+                <span class="toolbar-divider"></span>
+                <button type="button" data-action="ul" title="无序列表">• 列表</button>
+                <button type="button" data-action="ol" title="有序列表">1. 列表</button>
+                <button type="button" data-action="table" title="表格">表格</button>
+                <span class="toolbar-divider"></span>
+                <button type="button" data-action="hr" title="分隔线">——</button>
+              </div>
+            </div>
+            <div class="editor-body">
+              <div class="editor-pane">
+                <textarea id="article-body" name="body" required placeholder="在此编写 Markdown 正文..."></textarea>
+              </div>
+              <div class="preview-pane">
+                <div class="preview-header">预览</div>
+                <div id="preview-content" class="prose preview-content"></div>
+              </div>
             </div>
           </div>
-          <div class="step-arrow">↓</div>
-          <div class="step">
-            <div class="step-num">3</div>
-            <div class="step-body">
-              <h3>提交审核</h3>
-              <p>提交后文章进入审核流程，管理员会在 GitHub 上审核你的投稿内容</p>
-            </div>
+
+          <div class="form-actions">
+            <button type="submit" id="submit-btn" class="btn btn-primary btn-lg">
+              📤 提交审核
+            </button>
+            <p class="submit-note">提交后将创建 Pull Request，管理员审核通过后文章自动上线</p>
           </div>
-          <div class="step-arrow">↓</div>
-          <div class="step">
-            <div class="step-num">4</div>
-            <div class="step-body">
-              <h3>审核通过，自动上线</h3>
-              <p>管理员审核通过并合并后，文章将自动部署到站点，通常几分钟内即可在首页看到</p>
-            </div>
-          </div>
+        </form>
+      </div>
+
+      <div id="success-section" class="success-section" style="display:none;">
+        <div class="success-card">
+          <div class="success-icon">🎉</div>
+          <h2 class="success-title">投稿成功！</h2>
+          <p class="success-desc">你的文章已提交为 Pull Request，管理员审核通过后将自动上线。</p>
+          <a id="pr-link" href="#" target="_blank" class="btn btn-primary">
+            查看 Pull Request →
+          </a>
+          <button id="new-article-btn" class="btn btn-secondary" style="margin-top:12px;">
+            继续投稿
+          </button>
         </div>
       </div>
 
@@ -71,6 +138,239 @@ import Footer from '../../components/Footer.astro';
   </main>
   <Footer />
 </BaseLayout>
+
+<script>
+  const ARTICLE_TEMPLATE = `## 背景
+
+（在这里介绍你的背景和经历，让读者了解你的起点）
+
+## 过程
+
+（详细描述你的经历和做法，可以包含时间线、关键节点、具体方法等）
+
+### 关键步骤一
+
+（描述你采取的具体行动和策略）
+
+### 关键步骤二
+
+（继续描述你的经历）
+
+## 经验总结
+
+（总结你的经验和建议，提炼出对读者最有价值的信息）
+
+1. **建议一**：具体可操作的建议
+2. **建议二**：具体可操作的建议
+3. **建议三**：具体可操作的建议
+
+## 写在最后
+
+（给读者的一些鼓励或寄语）`;
+
+  let currentUser = null;
+
+  const authSection = document.getElementById('auth-section');
+  const editorSection = document.getElementById('editor-section');
+  const successSection = document.getElementById('success-section');
+  const userAvatar = document.getElementById('user-avatar');
+  const userName = document.getElementById('user-name');
+  const logoutBtn = document.getElementById('logout-btn');
+  const submitForm = document.getElementById('submit-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const bodyTextarea = document.getElementById('article-body');
+  const previewContent = document.getElementById('preview-content');
+  const prLink = document.getElementById('pr-link');
+  const newArticleBtn = document.getElementById('new-article-btn');
+
+  function showSection(section) {
+    authSection.style.display = 'none';
+    editorSection.style.display = 'none';
+    successSection.style.display = 'none';
+    section.style.display = '';
+  }
+
+  async function checkAuth() {
+    try {
+      const res = await fetch('/api/auth/me');
+      if (res.ok) {
+        currentUser = await res.json();
+        showEditor();
+        return;
+      }
+    } catch {}
+    showSection(authSection);
+  }
+
+  function showEditor() {
+    if (!currentUser) return;
+    userAvatar.src = currentUser.avatar_url;
+    userAvatar.alt = currentUser.name;
+    userName.textContent = currentUser.name;
+    const authorInput = document.getElementById('article-author');
+    if (!authorInput.value) {
+      authorInput.value = currentUser.name;
+    }
+    if (!bodyTextarea.value) {
+      bodyTextarea.value = ARTICLE_TEMPLATE;
+      updatePreview();
+    }
+    showSection(editorSection);
+  }
+
+  logoutBtn.addEventListener('click', async () => {
+    try {
+      document.cookie = 'gh_token=; Path=/; Max-Age=0';
+    } catch {}
+    currentUser = null;
+    showSection(authSection);
+  });
+
+  newArticleBtn.addEventListener('click', () => {
+    document.getElementById('article-title').value = '';
+    document.getElementById('article-category').value = '';
+    document.getElementById('article-tags').value = '';
+    document.getElementById('article-excerpt').value = '';
+    bodyTextarea.value = ARTICLE_TEMPLATE;
+    updatePreview();
+    showEditor();
+  });
+
+  function updatePreview() {
+    const text = bodyTextarea.value;
+    if (typeof marked !== 'undefined') {
+      previewContent.innerHTML = marked.parse(text);
+    } else {
+      previewContent.innerHTML = text.replace(/\n/g, '<br>');
+    }
+  }
+
+  bodyTextarea.addEventListener('input', updatePreview);
+
+  document.querySelectorAll('.editor-toolbar button[data-action]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const action = btn.dataset.action;
+      const start = bodyTextarea.selectionStart;
+      const end = bodyTextarea.selectionEnd;
+      const selected = bodyTextarea.value.substring(start, end);
+      let before = '', after = '', newCursorPos = start;
+
+      switch (action) {
+        case 'h2':
+          before = '## '; after = '';
+          newCursorPos = start + 3;
+          break;
+        case 'h3':
+          before = '### '; after = '';
+          newCursorPos = start + 4;
+          break;
+        case 'bold':
+          before = '**'; after = '**';
+          newCursorPos = selected ? start + before.length + selected.length + after.length : start + 2;
+          break;
+        case 'italic':
+          before = '*'; after = '*';
+          newCursorPos = selected ? start + before.length + selected.length + after.length : start + 1;
+          break;
+        case 'code':
+          before = '`'; after = '`';
+          newCursorPos = selected ? start + before.length + selected.length + after.length : start + 1;
+          break;
+        case 'link':
+          before = '['; after = '](url)';
+          newCursorPos = selected ? start + before.length + selected.length + after.length : start + 1;
+          break;
+        case 'image':
+          before = '!['; after = '](url)';
+          newCursorPos = selected ? start + before.length + selected.length + after.length : start + 2;
+          break;
+        case 'quote':
+          before = '> '; after = '';
+          newCursorPos = start + 2;
+          break;
+        case 'ul':
+          before = '- '; after = '';
+          newCursorPos = start + 2;
+          break;
+        case 'ol':
+          before = '1. '; after = '';
+          newCursorPos = start + 3;
+          break;
+        case 'table':
+          before = '\n| 列1 | 列2 | 列3 |\n|------|------|------|\n| 内容 | 内容 | 内容 |\n';
+          after = '';
+          newCursorPos = start + before.length;
+          break;
+        case 'hr':
+          before = '\n---\n'; after = '';
+          newCursorPos = start + before.length;
+          break;
+      }
+
+      bodyTextarea.value =
+        bodyTextarea.value.substring(0, start) + before + selected + after + bodyTextarea.value.substring(end);
+      bodyTextarea.focus();
+      bodyTextarea.setSelectionRange(newCursorPos, newCursorPos);
+      updatePreview();
+    });
+  });
+
+  submitForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const title = document.getElementById('article-title').value.trim();
+    const author = document.getElementById('article-author').value.trim();
+    const category = document.getElementById('article-category').value;
+    const tagsStr = document.getElementById('article-tags').value.trim();
+    const excerpt = document.getElementById('article-excerpt').value.trim();
+    const body = bodyTextarea.value;
+
+    if (!title || !author || !category || !excerpt || !body) {
+      alert('请填写所有必填字段');
+      return;
+    }
+
+    const tags = tagsStr ? tagsStr.split(/[,，]/).map(t => t.trim()).filter(Boolean) : [];
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = '⏳ 提交中...';
+
+    try {
+      const res = await fetch('/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, author, category, tags, excerpt, body }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        prLink.href = data.prUrl;
+        showSection(successSection);
+      } else {
+        alert(data.error || '提交失败，请稍后重试');
+      }
+    } catch {
+      alert('网络错误，请稍后重试');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = '📤 提交审核';
+    }
+  });
+
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('auth') === 'success') {
+    window.history.replaceState({}, '', '/submit');
+  }
+  if (params.get('error')) {
+    alert('登录失败: ' + decodeURIComponent(params.get('error')));
+    window.history.replaceState({}, '', '/submit');
+  }
+
+  checkAuth();
+</script>
+
+<script is:inline src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 <style>
   .submit-page {
@@ -96,32 +396,294 @@ import Footer from '../../components/Footer.astro';
     color: var(--text-secondary);
   }
 
-  .submit-actions {
+  .auth-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 48px;
+  }
+
+  .auth-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 48px 40px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    max-width: 420px;
+    width: 100%;
+  }
+
+  .auth-icon {
+    font-size: 48px;
+  }
+
+  .auth-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .auth-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .github-icon {
+    vertical-align: middle;
+  }
+
+  .user-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    margin-bottom: 24px;
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+  }
+
+  .user-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .btn-sm {
+    padding: 6px 14px;
+    font-size: 13px;
+  }
+
+  .submit-form {
+    margin-bottom: 48px;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-group-title {
+    grid-column: 1 / -1;
+  }
+
+  .form-group-full {
+    grid-column: 1 / -1;
+  }
+
+  .form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .required {
+    color: #e53e3e;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 10px 14px;
+    font-family: var(--font-stack);
+    font-size: 14px;
+    color: var(--text-primary);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--accent);
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: var(--text-muted);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+  }
+
+  .editor-container {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+
+  .editor-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .editor-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .editor-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .editor-toolbar button {
+    padding: 4px 8px;
+    font-family: var(--font-stack);
+    font-size: 13px;
+    color: var(--text-secondary);
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .editor-toolbar button:hover {
+    color: var(--text-primary);
+    background-color: var(--accent-light);
+    border-color: var(--border);
+  }
+
+  .toolbar-divider {
+    width: 1px;
+    height: 20px;
+    background-color: var(--border);
+    margin: 0 4px;
+  }
+
+  .editor-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 500px;
+  }
+
+  .editor-pane {
+    border-right: 1px solid var(--border);
+  }
+
+  .editor-pane textarea {
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    padding: 20px;
+    font-family: "SF Mono", "JetBrains Mono", ui-monospace, monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-primary);
+    background-color: var(--bg);
+    border: none;
+    resize: none;
+    outline: none;
+  }
+
+  .preview-pane {
+    overflow-y: auto;
+  }
+
+  .preview-header {
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border);
+    background-color: var(--surface);
+  }
+
+  .preview-content {
+    padding: 20px;
+    min-height: 460px;
+    font-size: 15px;
+  }
+
+  .form-actions {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 12px;
-    margin-bottom: 56px;
-    padding: 32px;
-    background-color: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
   }
 
-  .btn-lg {
-    padding: 14px 36px;
-    font-size: 16px;
-    font-weight: 600;
-    border-radius: var(--radius-md);
-  }
-
-  .submit-hint {
+  .submit-note {
     font-size: 13px;
     color: var(--text-muted);
   }
 
-  .workflow {
+  .success-section {
+    display: flex;
+    justify-content: center;
     margin-bottom: 48px;
+  }
+
+  .success-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 48px 40px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .success-icon {
+    font-size: 56px;
+  }
+
+  .success-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .success-desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.6;
   }
 
   .workflow-title {
@@ -129,51 +691,6 @@ import Footer from '../../components/Footer.astro';
     font-weight: 600;
     color: var(--text-primary);
     margin-bottom: 24px;
-  }
-
-  .steps {
-    max-width: 560px;
-    margin: 0 auto;
-  }
-
-  .step {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-  }
-
-  .step-num {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    font-weight: 700;
-    color: #fff;
-    background-color: var(--accent);
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .step-body h3 {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 4px;
-  }
-
-  .step-body p {
-    font-size: 14px;
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
-
-  .step-arrow {
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 20px;
-    margin: 8px 0 8px 60px;
   }
 
   .guidelines {
@@ -203,5 +720,37 @@ import Footer from '../../components/Footer.astro';
 
   .guide-list strong {
     color: var(--text-primary);
+  }
+
+  @media (max-width: 720px) {
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .editor-body {
+      grid-template-columns: 1fr;
+    }
+
+    .editor-pane {
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .editor-pane textarea {
+      min-height: 300px;
+    }
+
+    .preview-pane {
+      min-height: 300px;
+    }
+
+    .editor-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .submit-title {
+      font-size: 24px;
+    }
   }
 </style>
