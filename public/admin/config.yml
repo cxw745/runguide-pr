@@ -2,7 +2,7 @@ backend:
   name: github
   repo: cxw745/runguide
   branch: main
-  base_url: https://runguide.vercel.app
+  base_url: https://runguide-flame.vercel.app
   auth_endpoint: api/auth
   open_authoring: true
 
@@ -23,7 +23,7 @@ collections:
       - { name: date, label: 发布日期, widget: datetime }
       - { name: category, label: 分类, widget: select, options:
           ["转专业", "保研", "考研", "出国留学", "就业", "其他"] }
-      - { name: tags, label: 标签, widget: list, field: { widget: string } }
+      - { name: tags, label: 标签, widget: list, field: { name: tag, label: 标签, widget: string } }
       - { name: excerpt, label: 摘要, widget: text }
       - { name: body, label: 正文, widget: markdown }
     editor:
