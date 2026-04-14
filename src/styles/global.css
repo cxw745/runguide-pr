@@ -1,17 +1,18 @@
 :root {
-  --bg: #FAF9F6;
-  --bg-alt: #F3F1EC;
-  --surface: #FFFFFF;
-  --read-bg: rgba(248, 245, 242, 0.85);
-  --accent: #C4956A;
-  --accent-light: rgba(196, 149, 106, 0.10);
-  --text-primary: rgba(30, 28, 26, 0.90);
-  --text-secondary: rgba(80, 75, 70, 0.58);
-  --text-muted: rgba(120, 115, 108, 0.40);
-  --border: rgba(30, 28, 26, 0.07);
-  --border-strong: rgba(30, 28, 26, 0.14);
-  --shadow: 0 1px 3px rgba(30, 28, 26, 0.03), 0 4px 12px rgba(30, 28, 26, 0.02);
-  --shadow-hover: 0 2px 8px rgba(30, 28, 26, 0.05), 0 8px 24px rgba(30, 28, 26, 0.04);
+  --bg: #fffaeb;
+  --bg-alt: #f6f3ec;
+  --surface: #ffffff;
+  --read-bg: rgba(248, 245, 238, 0.85);
+  --accent: #ffb83e;
+  --accent-light: #fff0c2;
+  --accent-hover: #ffa110;
+  --text-primary: rgba(30, 28, 24, 0.90);
+  --text-secondary: rgba(80, 75, 65, 0.58);
+  --text-muted: rgba(120, 112, 100, 0.40);
+  --border: rgba(30, 28, 24, 0.07);
+  --border-strong: rgba(30, 28, 24, 0.14);
+  --shadow: 0 1px 3px rgba(127, 99, 21, 0.03), 0 4px 12px rgba(127, 99, 21, 0.02);
+  --shadow-hover: 0 2px 8px rgba(127, 99, 21, 0.05), 0 8px 24px rgba(127, 99, 21, 0.04);
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
@@ -22,19 +23,20 @@
 }
 
 [data-theme="dark"] {
-  --bg: #1c1b29;
-  --bg-alt: #222130;
-  --surface: #28273d;
-  --read-bg: rgba(32, 30, 46, 0.85);
-  --accent: #8B7CF6;
+  --bg: #0c0b1d;
+  --bg-alt: #12112a;
+  --surface: #1a1938;
+  --read-bg: rgba(18, 17, 36, 0.88);
+  --accent: #8b7cf6;
   --accent-light: rgba(139, 124, 246, 0.12);
-  --text-primary: rgba(220, 218, 230, 0.88);
-  --text-secondary: rgba(180, 178, 195, 0.60);
-  --text-muted: rgba(140, 138, 160, 0.45);
-  --border: rgba(255, 255, 255, 0.06);
-  --border-strong: rgba(255, 255, 255, 0.12);
-  --shadow: 0 1px 3px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.18);
-  --shadow-hover: 0 2px 8px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.22);
+  --accent-hover: #a594fa;
+  --text-primary: rgba(230, 228, 245, 0.90);
+  --text-secondary: rgba(175, 172, 200, 0.60);
+  --text-muted: rgba(130, 128, 160, 0.42);
+  --border: rgba(139, 124, 246, 0.08);
+  --border-strong: rgba(139, 124, 246, 0.16);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.30), 0 4px 12px rgba(0, 0, 0, 0.20);
+  --shadow-hover: 0 2px 8px rgba(0, 0, 0, 0.40), 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 *, *::before, *::after {

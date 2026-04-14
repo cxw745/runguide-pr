@@ -76,11 +76,9 @@
       var centerY = rect.height / 2;
       var rotateX = ((y - centerY) / centerY) * -6;
       var rotateY = ((x - centerX) / centerX) * 6;
-
       card.style.transform =
         'perspective(600px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateZ(8px) scale(1.02)';
     });
-
     card.addEventListener('mouseleave', function() {
       card.style.transform = '';
     });
@@ -104,19 +102,19 @@
     height: 360px;
     border-radius: 50%;
     background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
-    opacity: 0.05;
+    opacity: 0.06;
     filter: blur(100px);
     pointer-events: none;
     animation: pulseGlow 8s ease-in-out infinite;
   }
 
   [data-theme="dark"] .hero-bg-glow {
-    opacity: 0.06;
+    opacity: 0.08;
   }
 
   @keyframes pulseGlow {
-    0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.05; }
-    50% { transform: translateX(-50%) scale(1.15); opacity: 0.09; }
+    0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.06; }
+    50% { transform: translateX(-50%) scale(1.15); opacity: 0.10; }
   }
 
   .hero-center {
@@ -205,25 +203,25 @@
     background: linear-gradient(
       135deg,
       rgba(255, 255, 255, 0.55) 0%,
-      rgba(255, 252, 245, 0.30) 100%
+      rgba(255, 248, 230, 0.30) 100%
     );
-    border: 1px solid rgba(180, 160, 140, 0.12);
+    border: 1px solid rgba(255, 184, 62, 0.10);
     box-shadow:
-      0 4px 24px rgba(0, 0, 0, 0.03),
-      inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      0 4px 24px rgba(127, 99, 21, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.40);
   }
 
   [data-theme="dark"] .glass-card {
     background: linear-gradient(
       135deg,
-      rgba(139, 124, 246, 0.07) 0%,
-      rgba(26, 25, 50, 0.28) 100%
+      rgba(139, 124, 246, 0.08) 0%,
+      rgba(26, 25, 56, 0.25) 100%
     );
     border: 1px solid rgba(139, 124, 246, 0.10);
     box-shadow:
-      0 4px 24px rgba(0, 0, 0, 0.18),
+      0 4px 24px rgba(0, 0, 0, 0.20),
       inset 0 1px 0 rgba(255, 255, 255, 0.04),
-      0 0 12px rgba(139, 124, 246, 0.03);
+      0 0 16px rgba(139, 124, 246, 0.04);
   }
 
   .hero-card {
@@ -241,10 +239,10 @@
   .hero-card:hover {
     transform: translateY(-4px) !important;
     box-shadow:
-      0 12px 36px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.40),
-      0 0 24px rgba(196, 149, 106, 0.08);
-    border-color: rgba(196, 149, 106, 0.20);
+      0 12px 36px rgba(127, 99, 21, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.45),
+      0 0 24px rgba(255, 184, 62, 0.08);
+    border-color: rgba(255, 184, 62, 0.18);
     opacity: 1;
   }
 
@@ -252,7 +250,7 @@
     box-shadow:
       0 12px 36px rgba(0, 0, 0, 0.35),
       inset 0 1px 0 rgba(255, 255, 255, 0.06),
-      0 0 24px rgba(139, 124, 246, 0.15);
+      0 0 24px rgba(139, 124, 246, 0.18);
     border-color: rgba(139, 124, 246, 0.20);
   }
 

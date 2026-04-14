@@ -49,11 +49,9 @@ const features = [
       var centerY = rect.height / 2;
       var rotateX = ((y - centerY) / centerY) * -8;
       var rotateY = ((x - centerX) / centerX) * 8;
-
       card.style.transform =
         'perspective(600px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateZ(12px) scale(1.02)';
     });
-
     card.addEventListener('mouseleave', function() {
       card.style.transform = '';
     });
@@ -77,13 +75,13 @@ const features = [
     height: 300px;
     border-radius: 50%;
     background: radial-gradient(circle, var(--accent), transparent 70%);
-    opacity: 0.05;
+    opacity: 0.04;
     filter: blur(60px);
     pointer-events: none;
   }
 
   [data-theme="dark"] .features::before {
-    opacity: 0.08;
+    opacity: 0.06;
   }
 
   .features-grid {
@@ -98,25 +96,25 @@ const features = [
     -webkit-backdrop-filter: blur(12px) saturate(160%);
     background: linear-gradient(
       135deg,
-      rgba(252, 248, 242, 0.65) 0%,
-      rgba(245, 238, 228, 0.30) 100%
+      rgba(255, 252, 240, 0.60) 0%,
+      rgba(255, 248, 228, 0.28) 100%
     );
-    border: 1px solid rgba(196, 149, 106, 0.10);
+    border: 1px solid rgba(255, 184, 62, 0.08);
     box-shadow:
-      0 4px 24px rgba(30, 28, 26, 0.03),
+      0 4px 24px rgba(127, 99, 21, 0.03),
       inset 0 1px 0 rgba(255, 255, 255, 0.40);
   }
 
   [data-theme="dark"] .glass-feature {
     background: linear-gradient(
       135deg,
-      rgba(139, 124, 246, 0.08) 0%,
-      rgba(26, 25, 50, 0.35) 100%
+      rgba(139, 124, 246, 0.06) 0%,
+      rgba(26, 25, 56, 0.22) 100%
     );
-    border: 1px solid rgba(139, 124, 246, 0.12);
+    border: 1px solid rgba(139, 124, 246, 0.08);
     box-shadow:
-      0 4px 24px rgba(0, 0, 0, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      0 4px 24px rgba(0, 0, 0, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
   }
 
   .feature-card {
@@ -129,25 +127,25 @@ const features = [
   .feature-card:hover {
     transform: translateY(-4px) !important;
     box-shadow:
-      0 16px 40px rgba(30, 28, 26, 0.08),
+      0 16px 40px rgba(127, 99, 21, 0.08),
       inset 0 1px 0 rgba(255, 255, 255, 0.50),
-      0 0 20px rgba(196, 149, 106, 0.06);
-    border-color: rgba(196, 149, 106, 0.18);
+      0 0 20px rgba(255, 184, 62, 0.06);
+    border-color: rgba(255, 184, 62, 0.15);
   }
 
   [data-theme="dark"] .feature-card:hover {
     box-shadow:
-      0 16px 40px rgba(0, 0, 0, 0.4),
+      0 16px 40px rgba(0, 0, 0, 0.35),
       inset 0 1px 0 rgba(255, 255, 255, 0.06),
-      0 0 20px rgba(139, 124, 246, 0.15);
-    border-color: rgba(139, 124, 246, 0.25);
+      0 0 20px rgba(139, 124, 246, 0.12);
+    border-color: rgba(139, 124, 246, 0.15);
   }
 
   .feature-icon {
     display: block;
     font-size: 32px;
     margin-bottom: 16px;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08));
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.06));
   }
 
   .feature-title {
