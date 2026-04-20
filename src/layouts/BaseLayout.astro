@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
   title: string;
@@ -25,6 +26,7 @@ const { title, description = '广东财经大学飞跃手册 — 由广财学子
         document.documentElement.setAttribute('data-theme', theme);
       })();
     </script>
+    <SpeedInsights />
   </head>
   <body>
     <slot />
